@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build ./ -t kihachi-env
+docker build ./ --no-cache -t kihachi-env
