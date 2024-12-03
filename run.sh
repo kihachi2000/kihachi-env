@@ -16,4 +16,4 @@ if [ "$(uname)" != "Darwin" ]; then
     )
 fi
 
-docker run "${OPT[@]}" kihachi-env
+docker run "${OPT[@]}" kihachi-env "$@"

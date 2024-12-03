@@ -58,4 +58,4 @@ RUN git clone https://github.com/kihachi2000/dotfiles.git --branch=dev --depth=1
 
 RUN chmod -R 777 /root
 
-#ENTRYPOINT ["nvim"]
+ENTRYPOINT ["nvim"]
