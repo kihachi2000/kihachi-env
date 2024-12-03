@@ -15,8 +15,8 @@ RUN apk update --no-cache \
     npm \
     tar
 
-# eslint & prettier
-RUN npm install -g eslint prettier
+# typescript related
+RUN npm install -g eslint prettier typescript-language-server typescript
 
 # rust-analyzer
 ENV PATH $PATH:/root/.rust-analyzer
