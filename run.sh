@@ -4,6 +4,7 @@ OPT=(
     "-it"
     "--rm"
     "--workdir" "/root/virtual-home"
+    "-e" "HOME=/root"
     "-v" "$(pwd):/root/virtual-home"
 )
 
