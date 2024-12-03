@@ -1,7 +1,5 @@
 FROM alpine:latest
 
-ARG TARGETPLATFORM
-
 WORKDIR /root
 
 # apk
@@ -20,13 +18,15 @@ RUN apk update --no-cache \
 # eslint & prettier
 RUN npm install -g eslint prettier
 
-# rust-analyzer & stylua
-#ENV PATH $PATH:/root/.cargo/bin
-#RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > /root/install-rustup.sh \
-    #&& sh /root/install-rustup.sh -y \
-    #&& rm /root/install-rustup.sh \
-    #&& rustup component add rust-analyzer \
-    #&& cargo install stylua
+# rust-analyzer
+ENV PATH $PATH:/root/.rust-analyzer
+RUN PLATFORM=$(case $(uname -m) in \
+        "x86_64") echo "x86_64";; \
+        "aarch64") echo "aarch64";; \
+    esac) \
+    && mkdir .rust-analyzer \
+    && curl -fLsS https://github.com/rust-lang/rust-analyzer/releases/download/2024-12-02/rust-analyzer-${PLATFORM}-unknown-linux-gnu.gz > /root/.rust-analyzer/rust-analyzer.gz \
+    && gzip -d /root/.rust-analyzer/rust-analyzer.gz
 
 # lua-ls
 ENV PATH $PATH:/root/.lua-ls/bin
@@ -49,7 +49,6 @@ RUN PLATFORM=$(case $(uname -m) in \
     && mkdir .stylua \
     && unzip /root/stylua.zip -d /root/.stylua \
     && rm /root/stylua.zip
-
 
 # dotfiles
 RUN git clone https://github.com/kihachi2000/dotfiles.git --branch=dev --depth=1 .dotfiles \
