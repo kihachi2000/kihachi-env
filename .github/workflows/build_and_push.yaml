@@ -25,6 +25,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Extract meta data
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/kihachi-env
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
@@ -32,4 +38,5 @@ jobs:
           file: Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: kihachi2000/kihachi-env:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labes }}
