@@ -16,4 +16,11 @@ if [ "$(uname)" != "Darwin" ]; then
     )
 fi
 
+# WSL2環境のときは/mnt/c/Usersをマウントする
+if [[ "$(uname -r)" == *-microsoft-standard-WSL2 ]]; then
+    OPT+=(
+        "-v" "/mnt/c/Users:/mnt/c/Users"
+    )
+fi
+
 docker run "${OPT[@]}" kihachi-env "$@"
