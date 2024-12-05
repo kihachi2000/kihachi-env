@@ -23,4 +23,4 @@ if [[ "$(uname -r)" == *-microsoft-standard-WSL2 ]]; then
     )
 fi
 
-docker run "${OPT[@]}" kihachi-env "$@"
+docker run "${OPT[@]}" ghcr.io/kihachi2000/kihachi-env "$@"
