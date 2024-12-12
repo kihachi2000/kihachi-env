@@ -5,6 +5,7 @@ WORKDIR /root
 # apk
 RUN apk update --no-cache \
     && apk add --no-cache \
+    ccls \
     curl \
     gcc \
     git \
