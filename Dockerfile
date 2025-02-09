@@ -3,12 +3,16 @@ FROM alpine:latest
 WORKDIR /root
 
 # apk
-RUN apk update --no-cache \
+# adding testing repository for haskell-language-server
+RUN echo "@testing https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+    && apk update --no-cache \
     && apk add --no-cache \
     ccls \
     curl \
     gcc \
+    ghc \
     git \
+    haskell-language-server@testing \
     libc6-compat \
     musl-dev \
     neovim \
@@ -60,17 +64,6 @@ RUN curl -fLsS https://www.eclipse.org/downloads/download.php?file=/jdtls/snapsh
     && mkdir .jdtls \
     && tar -zxvf /root/jdtls.tar.gz -C /root/.jdtls \
     && rm /root/jdtls.tar.gz
-
-# haskell-language-server
-ENV PATH $PATH:/root/.haskell-language-server/haskell-language-server-2.9.0.1/bin
-RUN FILENAME=$(case $(uname -m) in \
-        "x86_64") echo "x86_64-linux-unknown";; \
-        "aarch64") echo "aarch64-linux-ubuntu20";; \
-    esac) \
-    && curl -fLsS https://github.com/haskell/haskell-language-server/releases/download/2.9.0.1/haskell-language-server-2.9.0.1-${FILENAME}.tar.xz > /root/haskell-language-server.tar.xz \
-    && mkdir .haskell-language-server \
-    && tar -Jxvf /root/haskell-language-server.tar.xz -C /root/.haskell-language-server \
-    && rm /root/haskell-language-server.tar.xz
 
 # dotfiles
 RUN git clone https://github.com/kihachi2000/dotfiles.git --branch=dev --depth=1 .dotfiles \
