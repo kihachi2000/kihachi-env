@@ -16,7 +16,8 @@ RUN apk update --no-cache \
     npm \
     openjdk17-jre \
     python3 \
-    tar
+    tar \
+    xz
 
 # typescript related
 RUN npm install -g eslint prettier typescript-language-server typescript
@@ -59,6 +60,17 @@ RUN curl -fLsS https://www.eclipse.org/downloads/download.php?file=/jdtls/snapsh
     && mkdir .jdtls \
     && tar -zxvf /root/jdtls.tar.gz -C /root/.jdtls \
     && rm /root/jdtls.tar.gz
+
+# haskell-language-server
+ENV PATH $PATH:/root/.stylua
+RUN PLATFORM=$(case $(uname -m) in \
+        "x86_64") echo "x86_64";; \
+        "aarch64") echo "aarch64";; \
+    esac) \
+    && curl -fLsS https://github.com/haskell/haskell-language-server/releases/download/2.9.0.1/haskell-language-server-2.9.0.1-${PLATFORM}-linux-unknown.tar.xz > /root/haskell-language-server.tar.xz \
+    && mkdir .haskell-language-server \
+    && tar -Jxvf /root/haskell-language-server.tar.xz -C /root/.haskell-language-server \
+    && rm /root/haskell-language-server.tar.xz
 
 # dotfiles
 RUN git clone https://github.com/kihachi2000/dotfiles.git --branch=dev --depth=1 .dotfiles \
