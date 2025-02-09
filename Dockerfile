@@ -63,11 +63,11 @@ RUN curl -fLsS https://www.eclipse.org/downloads/download.php?file=/jdtls/snapsh
 
 # haskell-language-server
 ENV PATH $PATH:/root/.stylua
-RUN PLATFORM=$(case $(uname -m) in \
-        "x86_64") echo "x86_64";; \
-        "aarch64") echo "aarch64";; \
+RUN FILENAME=$(case $(uname -m) in \
+        "x86_64") echo "x86_64-linux-unknown";; \
+        "aarch64") echo "aarch64-linux-ubuntu20";; \
     esac) \
-    && curl -fLsS https://github.com/haskell/haskell-language-server/releases/download/2.9.0.1/haskell-language-server-2.9.0.1-${PLATFORM}-linux-unknown.tar.xz > /root/haskell-language-server.tar.xz \
+    && curl -fLsS https://github.com/haskell/haskell-language-server/releases/download/2.9.0.1/haskell-language-server-2.9.0.1-${FILENAME}.tar.xz > /root/haskell-language-server.tar.xz \
     && mkdir .haskell-language-server \
     && tar -Jxvf /root/haskell-language-server.tar.xz -C /root/.haskell-language-server \
     && rm /root/haskell-language-server.tar.xz
