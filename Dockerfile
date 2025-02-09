@@ -62,7 +62,7 @@ RUN curl -fLsS https://www.eclipse.org/downloads/download.php?file=/jdtls/snapsh
     && rm /root/jdtls.tar.gz
 
 # haskell-language-server
-ENV PATH $PATH:/root/.haskell-language-server/bin
+ENV PATH $PATH:/root/.haskell-language-server/haskell-language-server-2.9.0.1/bin
 RUN FILENAME=$(case $(uname -m) in \
         "x86_64") echo "x86_64-linux-unknown";; \
         "aarch64") echo "aarch64-linux-ubuntu20";; \
