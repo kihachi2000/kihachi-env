@@ -13,12 +13,12 @@ RUN echo "@testing https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/a
     ghc \
     git \
     haskell-language-server@testing \
+    jdtls \
     libc6-compat \
     musl-dev \
     neovim \
     nodejs \
     npm \
-    openjdk17-jre \
     python3 \
     tar \
     xz
@@ -57,13 +57,6 @@ RUN PLATFORM=$(case $(uname -m) in \
     && mkdir .stylua \
     && unzip /root/stylua.zip -d /root/.stylua \
     && rm /root/stylua.zip
-
-# jdtls
-ENV PATH $PATH:/root/.jdtls/bin
-RUN curl -fLsS https://www.eclipse.org/downloads/download.php?file=/jdtls/snapshots/jdt-language-server-latest.tar.gz > /root/jdtls.tar.gz \
-    && mkdir .jdtls \
-    && tar -zxvf /root/jdtls.tar.gz -C /root/.jdtls \
-    && rm /root/jdtls.tar.gz
 
 # dotfiles
 RUN git clone https://github.com/kihachi2000/dotfiles.git --branch=dev --depth=1 .dotfiles \
