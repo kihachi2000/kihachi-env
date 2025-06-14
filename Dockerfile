@@ -7,6 +7,7 @@ WORKDIR /root
 RUN echo "@testing https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
     && apk update --no-cache \
     && apk add --no-cache \
+    cargo \
     ccls \
     curl \
     gcc \
@@ -20,21 +21,12 @@ RUN echo "@testing https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/a
     nodejs \
     npm \
     python3 \
+    rust-analyzer \
     tar \
     xz
 
 # typescript related
 RUN npm install -g eslint prettier typescript-language-server typescript
-
-# rust-analyzer
-ENV PATH $PATH:/root/.rust-analyzer
-RUN PLATFORM=$(case $(uname -m) in \
-        "x86_64") echo "x86_64";; \
-        "aarch64") echo "aarch64";; \
-    esac) \
-    && mkdir .rust-analyzer \
-    && curl -fLsS https://github.com/rust-lang/rust-analyzer/releases/download/2024-12-02/rust-analyzer-${PLATFORM}-unknown-linux-gnu.gz > /root/.rust-analyzer/rust-analyzer.gz \
-    && gzip -d /root/.rust-analyzer/rust-analyzer.gz
 
 # lua-ls
 ENV PATH $PATH:/root/.lua-ls/bin
